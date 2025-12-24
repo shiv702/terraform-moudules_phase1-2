@@ -35,7 +35,10 @@ resource "aws_s3_bucket_versioning" "artifacts" {
 data "aws_iam_policy_document" "codepipeline_assume" {
   statement {
     actions = ["sts:AssumeRole"]
-    principals { type = "Service", identifiers = ["codepipeline.amazonaws.com"] }
+  principals {
+  type        = "Service"
+  identifiers = ["codepipeline.amazonaws.com"]
+}
   }
 }
 
@@ -49,7 +52,10 @@ resource "aws_iam_role" "codepipeline" {
 data "aws_iam_policy_document" "codebuild_assume" {
   statement {
     actions = ["sts:AssumeRole"]
-    principals { type = "Service", identifiers = ["codebuild.amazonaws.com"] }
+  principals {
+  type        = "Service"
+  identifiers = ["codebuild.amazonaws.com"]
+    }
   }
 }
 
@@ -181,11 +187,26 @@ resource "aws_codebuild_project" "plan" {
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
 
-    environment_variable { name = "AWS_REGION",      value = var.aws_region }
-    environment_variable { name = "TF_WORKING_DIR",  value = each.value.working_dir }
-    environment_variable { name = "TF_STATE_BUCKET", value = var.tf_state_bucket }
-    environment_variable { name = "TF_LOCK_TABLE",   value = var.tf_lock_table }
-    environment_variable { name = "TF_STATE_KEY",    value = var.tf_state_key }
+    environment_variable { 
+      name = "AWS_REGION"      
+      value = var.aws_region 
+      }
+    environment_variable { 
+      name = "TF_WORKING_DIR"  
+      value = each.value.working_dir 
+      }
+    environment_variable { 
+      name = "TF_STATE_BUCKET" 
+      value = var.tf_state_bucket 
+      }
+    environment_variable { 
+      name = "TF_LOCK_TABLE"   
+      value = var.tf_lock_table 
+      }
+    environment_variable { 
+      name = "TF_STATE_KEY"    
+      value = var.tf_state_key 
+      }
 
     environment_variable {
       name  = "TF_TARGET_ARGS"
@@ -193,7 +214,10 @@ resource "aws_codebuild_project" "plan" {
     }
   }
 
-  source { type = "CODEPIPELINE", buildspec = local.buildspec_plan }
+  source {
+  type      = "CODEPIPELINE"
+  buildspec = local.buildspec_plan
+}
   tags = var.tags
 }
 
@@ -210,11 +234,26 @@ resource "aws_codebuild_project" "apply" {
     type                        = "LINUX_CONTAINER"
     image_pull_credentials_type = "CODEBUILD"
 
-    environment_variable { name = "AWS_REGION",      value = var.aws_region }
-    environment_variable { name = "TF_WORKING_DIR",  value = each.value.working_dir }
-    environment_variable { name = "TF_STATE_BUCKET", value = var.tf_state_bucket }
-    environment_variable { name = "TF_LOCK_TABLE",   value = var.tf_lock_table }
-    environment_variable { name = "TF_STATE_KEY",    value = var.tf_state_key }
+    environment_variable { 
+      name = "AWS_REGION"      
+      value = var.aws_region 
+      }
+    environment_variable { 
+      name = "TF_WORKING_DIR"  
+      value = each.value.working_dir 
+      }
+    environment_variable { 
+      name = "TF_STATE_BUCKET" 
+      value = var.tf_state_bucket 
+      }
+    environment_variable { 
+      name = "TF_LOCK_TABLE"   
+      value = var.tf_lock_table 
+      }
+    environment_variable { 
+      name = "TF_STATE_KEY"    
+      value = var.tf_state_key 
+      }
 
     environment_variable {
       name  = "TF_TARGET_ARGS"
@@ -222,7 +261,10 @@ resource "aws_codebuild_project" "apply" {
     }
   }
 
-  source { type = "CODEPIPELINE", buildspec = local.buildspec_apply }
+  source { 
+    type = "CODEPIPELINE" 
+    buildspec = local.buildspec_apply 
+    }
   tags = var.tags
 }
 

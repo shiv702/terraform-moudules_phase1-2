@@ -1,8 +1,14 @@
 variable "aws_account_id" { type = string }
 variable "aws_region"     { type = string }
 variable "name_prefix"    { type = string }
-variable "branch"         { type = string, default = "main" }
-variable "tags"           { type = map(string), default = {} }
+variable "branch"         { 
+  type = string 
+  default = "main" 
+  }
+variable "tags" { 
+  type = map(string) 
+  default = {} 
+  }
 
 variable "git_repo_full_name" {
   description = "GitHub repository in the form 'org/repo'."

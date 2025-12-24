@@ -53,8 +53,15 @@ variable "nat_gateway_strategy" {
 }
 
 # ---------- Audit inputs ----------
-variable "enable_cloudtrail" { type = bool, default = true }
-variable "enable_config"     { type = bool, default = true }
+variable "enable_cloudtrail" {
+  type    = bool
+  default = true
+}
+
+variable "enable_config" {
+  type    = bool
+  default = true
+}
 
 variable "cloudtrail_multi_region" {
   type    = bool
